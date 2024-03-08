@@ -26,7 +26,15 @@ export const postRequest = async (url: string, data: any) => {
 
 export const putRequest = async (url: string, id: number, data: any) => {
     try {
-        const res = await axios.post(`${base_url}/${url}/${id}`, data)
+        return await axios.put(`${base_url}/${url}/${id}/`, data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteRequest = async (url: string, id: number) => {
+    try {
+        const res = await axios.delete(`${base_url}/${url}/${id}/`)
 
         return res.data
 

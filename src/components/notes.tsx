@@ -1,6 +1,6 @@
 import React from "react"
-import { getRequest, putRequest } from "../services";
-import { useLocation } from "react-router-dom";
+import { deleteRequest, getRequest, putRequest } from "../services";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Typography from '@mui/material/Typography';
 import { Box, Button, Container, Paper, Stack } from "@mui/material";
@@ -8,13 +8,14 @@ import TextField from "@mui/material/TextField"
 
 const Notes = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate()
     const [status, setStatus] = React.useState({} as { id: number, title: string, content: string })
     const [isEdit, setIsEdit] = React.useState(false)
     const [editValue, setEditValue] = React.useState({} as { id: number, title: string, content: string })
     const getList = async () => {
         const res = await getRequest('notes');
         const _id = pathname.split("/")[pathname.split("/").length - 1]
-        const _note = res.find((i: any) => i.id = _id)
+        const _note = res.find((i: any) => i.id === Number(_id))
         setStatus(_note)
         setEditValue(_note)
     }
@@ -25,11 +26,15 @@ const Notes = () => {
 
     const onSave = async () => {
         const res = await putRequest("notes", editValue.id, editValue)
-        console.log(res)
+        if (!!res && res.status === 205) {
+            setStatus(editValue)
+            setIsEdit(false)
+        }
     }
 
-    const onDelete = () => {
-
+    const onDelete = async () => {
+        await deleteRequest("notes", status.id)
+        navigate("/")
     }
 
     return (
