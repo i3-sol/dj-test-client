@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
-import List from './components/list';
-import Notes from './components/notes';
+import List from './pages/list';
+import Notes from './pages/notes';
+import Login from './pages/login';
+import Register from './pages/register';
 
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
       <Routes>
         <Route path='/' Component={List}></Route>
         <Route path='/notes/:id' Component={Notes}></Route>
+        <Route path='/login' Component={Login}></Route>
+        <Route path='/register' Component={Register}></Route>
       </Routes>
     </BrowserRouter>
   );

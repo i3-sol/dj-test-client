@@ -13,14 +13,9 @@ export const getRequest = async (url: string) => {
 
 export const postRequest = async (url: string, data: any) => {
     try {
-        const res = await axios.post(`${base_url}/${url}/`, data)
-        if (res.status === 201) {
-            return res.data
-        } else {
-            console.log("postRequest: ", res.statusText)
-        }
-    } catch (error) {
-        console.log(error)
+        return await axios.post(`${base_url}/${url}/`, data)
+    } catch (error: any) {
+        return error.response
     }
 }
 
